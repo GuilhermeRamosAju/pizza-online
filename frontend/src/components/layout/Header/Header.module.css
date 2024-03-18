@@ -10,7 +10,7 @@
     gap: 1.5rem;
     justify-content: center;
     align-items: center;
-    margin: 0 1rem 
+    margin: 0 1rem
 }
 
 .logo {
@@ -29,8 +29,17 @@
     list-style: none;
     color: white;
     justify-content: center;
-    margin: 0 1rem ;
+    margin: 0 1rem;
     align-items: center;
     font-weight: 500;
     font-family: sans-serif;
+}
+
+.linkMenu {
+    color: white;
+    text-decoration: none;
+}
+
+.linkMenu:active {
+    text-decoration: underline;
 }
