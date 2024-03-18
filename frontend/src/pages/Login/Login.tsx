@@ -1,11 +1,11 @@
-import style from "./Login.module.css"
-import { BoxBase, FieldText } from "../../components";
+import style from "./Login.module.css";
+import { BoxBase, Button, FieldText } from "../../components";
 
 export default function Login() {
   return (
     <div className={style.container}>
       <BoxBase>
-        <h2>Entrar</h2>
+        <h2>Acessar aplicação</h2>
         <FieldText.BaseInput>
           <FieldText.Label label="email">E-mail:</FieldText.Label>
           <FieldText.Input
@@ -22,6 +22,7 @@ export default function Login() {
             type="password"
           />
         </FieldText.BaseInput>
+        <Button>Entrar</Button>
       </BoxBase>
     </div>
   );
