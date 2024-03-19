@@ -1,12 +1,15 @@
 import style from "./Register.module.css";
 import { BoxBase, Button, FieldText } from "../../components";
 import { ChangeEvent, FormEvent, useState } from "react";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -21,9 +24,21 @@ export default function Register() {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log("Nome: ", name, ", email: ", email, ", senha: ", password);
+    if (password !== confirmPassword) {
+      console.error("As senhas não coincidem.");
+      return;
+    }
+
+    try {
+      await api.post("/usuarios", { name, email, password });
+      console.log("Usuário cadastrado com sucesso!");
+      navigate("/");
+    } catch (error) {
+      console.error("Erro ao cadastrar usuário:", error);
+    }
   };
   return (
     <div className={style.container}>
@@ -70,7 +85,7 @@ export default function Register() {
             <FieldText.Input
               label="confirmPassword"
               placeholder="Sua senha"
-              type="confirmPassword"
+              type="password"
               value={confirmPassword}
               onChange={handleConfirmPassword}
               required
