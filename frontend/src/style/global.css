@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+:root {
+    --marrom-base: #653000;
+    --amarelo-base: #F7E890;
+    --background: #FFEFCF;
+}
+
+:root {
+    background-color: var(--background);
+}
