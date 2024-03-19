@@ -43,3 +43,9 @@
 .linkMenu:active {
     text-decoration: underline;
 }
+
+.btn {
+    padding: .5rem .25rem;
+    cursor: pointer;
+    border-radius: 100%;
+}
