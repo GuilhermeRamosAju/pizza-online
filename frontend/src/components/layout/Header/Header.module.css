@@ -1,0 +1,51 @@
+.header {
+    background-color: var(--marrom-base);
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+}
+
+.containerMarca {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1rem
+}
+
+.logo {
+    width: 4rem;
+    height: auto;
+}
+
+.headerTitle {
+    font-size: 2rem;
+    color: white;
+}
+
+.menu {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    color: white;
+    justify-content: center;
+    margin: 0 1rem;
+    align-items: center;
+    font-weight: 500;
+    font-family: sans-serif;
+}
+
+.linkMenu {
+    color: white;
+    text-decoration: none;
+}
+
+.linkMenu:active {
+    text-decoration: underline;
+}
+
+.btn {
+    padding: .5rem .25rem;
+    cursor: pointer;
+    border-radius: 100%;
+}
