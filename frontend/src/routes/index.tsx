@@ -14,6 +14,8 @@ export function Routes() {
       <Route path="/" element={<PrivateRoutes />}>
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<Pg.Home />} />
+        <Route path="/fazer-pedido" element={<Pg.PlaceOrder />} />
+        <Route path="/carrinho" element={<Pg.Cart />} />
       </Route>
     </RRDRoutes>
   );
