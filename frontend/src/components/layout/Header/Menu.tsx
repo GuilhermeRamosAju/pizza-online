@@ -18,9 +18,13 @@ export default function Menu() {
       <li className={style.linkMenu}>Mais pedidos</li>
       {isAuthenticated ? (
         <>
-          <li className={style.linkMenu}>Fazer pedido</li>
+          <Link to={"/fazer-pedido"} className={style.linkMenu}>
+            <li className={style.linkMenu}>Fazer pedido</li>
+          </Link>
           <li className={style.linkMenu}>Meus pedidos</li>
-          <li className={style.linkMenu}>Carrinho</li>
+          <Link to={"/carrinho"} className={style.linkMenu}>
+            <li className={style.linkMenu}>Carrinho</li>
+          </Link>
           {/* <button className={style.btn} onClick={signOut}>Sair</button> */}
         </>
       ) : (
