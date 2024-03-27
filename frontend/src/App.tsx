@@ -2,14 +2,14 @@ import { BrowserRouter } from "react-router-dom";
 import { Header } from "./components";
 import "./style/global.css";
 import { Routes } from "./routes";
-import AppProvider from "./hook";
+import { AuthProvider } from "./hook/auth";
 function App() {
   return (
     <BrowserRouter>
       <Header />
-      <AppProvider>
+      <AuthProvider>
         <Routes />
-      </AppProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

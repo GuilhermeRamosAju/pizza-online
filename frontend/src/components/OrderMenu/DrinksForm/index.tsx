@@ -3,9 +3,8 @@ import style from "./DrinksForm.module.css";
 import api from "../../../services/api";
 import { IDrink } from "../../../interfaces/cardapio";
 
-
 export default function DrinksForm() {
-  const [bebidaSelecionada, setBebidaSelecionada] = useState<number>(0);
+  const [bebidaSelecionada, setBebidaSelecionada] = useState<string>("");
   const [bebidas, setBebidas] = useState<IDrink[]>([]);
 
   useEffect(() => {
@@ -22,11 +21,11 @@ export default function DrinksForm() {
   }, []);
 
   const handleBebidaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setBebidaSelecionada(Number(event.target.value));
+    setBebidaSelecionada(event.target.value);
   };
 
   const handleAddToCart = () => {
-    const bebida = bebidas.find((item) => item.id === bebidaSelecionada);
+    const bebida = bebidas.find((item) => item.nome === bebidaSelecionada);
     if (bebida) {
       const carrinho = localStorage.getItem("@PizzaTiradentes:carrinho-bebidas");
       let novoCarrinho: IDrink[] = [];
@@ -42,7 +41,7 @@ export default function DrinksForm() {
         JSON.stringify(novoCarrinho)
       );
 
-      setBebidaSelecionada(0);
+      setBebidaSelecionada("");
     }
   };
 
@@ -55,9 +54,9 @@ export default function DrinksForm() {
           value={bebidaSelecionada}
           onChange={handleBebidaChange}
         >
-          <option value={0}>Selecione uma opção</option>
+          <option value="">Selecione uma opção</option>
           {bebidas.map((bebida) => (
-            <option key={bebida.id} value={bebida.id}>
+            <option key={bebida.id} value={bebida.nome}>
               {bebida.nome} - R${bebida.preco.toFixed(2)}
             </option>
           ))}
@@ -65,7 +64,7 @@ export default function DrinksForm() {
       </div>
       <button
         onClick={handleAddToCart}
-        disabled={bebidaSelecionada === 0}
+        disabled={bebidaSelecionada === ""}
         className={!bebidaSelecionada ? style["btn-disable"] : style.btn}
       >
         Adicionar ao Carrinho
