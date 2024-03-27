@@ -16,6 +16,7 @@ export function Routes() {
         <Route path="/home" element={<Pg.Home />} />
         <Route path="/fazer-pedido" element={<Pg.PlaceOrder />} />
         <Route path="/carrinho" element={<Pg.Cart />} />
+        <Route path="/pedidos" element={<Pg.MyOrders />} />
       </Route>
     </RRDRoutes>
   );
