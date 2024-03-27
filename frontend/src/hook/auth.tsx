@@ -8,13 +8,7 @@ import {
 
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
+import { IUser } from "../interfaces/IUser";
 
 interface SignInCredencials {
   email: string;
@@ -22,11 +16,11 @@ interface SignInCredencials {
 }
 
 interface AuthState {
-  user: User | null;
+  user: IUser | null;
 }
 
 interface AuthContextData {
-  user: User | null;
+  user: IUser | null;
   signIn(credencials: SignInCredencials): Promise<void>;
   signOut(): void;
 }
@@ -41,35 +35,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate();
   const [data, setData] = useState<AuthState>(() => {
     const user = localStorage.getItem("@PizzaTiradentes:user");
-
-    if (user) {
-      return { user: JSON.parse(user) };
-    }
-
-    return {} as AuthState;
+    return { user: user ? JSON.parse(user) : null };
   });
 
-  /* 
-  sign in com api
-  const signIn = useCallback(async ({ email, password }: SignInCredencials) => {
-    const response = await api.post("sessions", {
-      email,
-      password,
-    });
-
-    const { user } = response.data;
-
-    localStorage.setItem("@PizzaTiradentes:user", JSON.stringify(user));
-
-    setData({
-      user,
-    });
-  }, []); */
-
-  //signin com json server
   const signIn = useCallback(async ({ email, password }: SignInCredencials) => {
     try {
-      const response = await api.get<User[]>(`/usuarios?email=${email}`);
+      const response = await api.get<IUser[]>(`/usuarios?email=${email}`);
 
       if (response.data.length === 0) {
         throw new Error("Usuário não encontrado");
@@ -88,11 +59,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
+
   const signOut = useCallback(() => {
-    localStorage.clear();
-    navigate("/");
-    setData({} as AuthState);
-  }, [navigate]);
+    console.log('dentro signout')
+    try {
+      setData({ user: null });
+      localStorage.removeItem("@PizzaTiradentes:user"); 
+      navigate("/login"); 
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+      throw new Error("Erro ao fazer logout.");
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
@@ -101,7 +79,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
 
