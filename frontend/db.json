@@ -8,20 +8,95 @@
     }
   ],
   "pizzas": [
-    { "id": 1, "nome": "Margherita", "preco": 25.00 },
-    { "id": 2, "nome": "Calabresa", "preco": 28.00 },
-    { "id": 3, "nome": "Frango", "preco": 26.00 },
-    { "id": 4, "nome": "Quatro Queijos", "preco": 30.00 },
-    { "id": 5, "nome": "Frango com Requeijão", "preco": 29.00 },
-    { "id": 6, "nome": "Chocolate", "preco": 27.00 },
-    { "id": 7, "nome": "Banana com Leite Condensado", "preco": 27.00 },
-    { "id": 8, "nome": "Doce de Leite", "preco": 30.00 }
+    {
+      "id": 1,
+      "nome": "Margherita",
+      "preco": 25
+    },
+    {
+      "id": 2,
+      "nome": "Calabresa",
+      "preco": 28
+    },
+    {
+      "id": 3,
+      "nome": "Frango",
+      "preco": 26
+    },
+    {
+      "id": 4,
+      "nome": "Quatro Queijos",
+      "preco": 30
+    },
+    {
+      "id": 5,
+      "nome": "Frango com Requeijão",
+      "preco": 29
+    },
+    {
+      "id": 6,
+      "nome": "Chocolate",
+      "preco": 27
+    },
+    {
+      "id": 7,
+      "nome": "Banana com Leite Condensado",
+      "preco": 27
+    },
+    {
+      "id": 8,
+      "nome": "Doce de Leite",
+      "preco": 30
+    }
   ],
   "bebidas": [
-    { "id": 1, "nome": "Refrigerante - lata", "preco": 5.00 },
-    { "id": 2, "nome": "Refrigerante - 1 L", "preco": 7.00 },
-    { "id": 3, "nome": "Refrigerante - 2 L", "preco": 9.00 },
-    { "id": 4, "nome": "Suco - copo", "preco": 4.00 },
-    { "id": 5, "nome": "Suco - 1 L", "preco": 10.00 }
+    {
+      "id": 1,
+      "nome": "Refrigerante - lata",
+      "preco": 5
+    },
+    {
+      "id": 2,
+      "nome": "Refrigerante - 1 L",
+      "preco": 7
+    },
+    {
+      "id": 3,
+      "nome": "Refrigerante - 2 L",
+      "preco": 9
+    },
+    {
+      "id": 4,
+      "nome": "Suco - copo",
+      "preco": 4
+    },
+    {
+      "id": 5,
+      "nome": "Suco - 1 L",
+      "preco": 10
+    }
+  ],
+  "pedidos": [
+    {
+      "id": "35d0",
+      "data": "2024-03-27T14:37:41.175Z",
+      "userId": "1",
+      "pizzas": [
+        {
+          "tamanho": "grande",
+          "sabores": [
+            "Calabresa"
+          ],
+          "preco": 56
+        }
+      ],
+      "bebidas": [
+        {
+          "id": 2,
+          "nome": "Refrigerante - 1 L",
+          "preco": 7
+        }
+      ]
+    }
   ]
 }
