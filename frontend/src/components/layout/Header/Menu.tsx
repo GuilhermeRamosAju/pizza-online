@@ -1,20 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./Header.module.css";
-import { useAuth } from "../../../hook/auth";
+import { USER_KEY } from "../../../constants/auth";
+import { useState, useEffect } from "react";
 
 export default function Menu() {
-  const { signOut } = useAuth();
-  const hasUser = () => {
-    const user = localStorage.getItem("@PizzaTiradentes:user");
-    return { user: user ? JSON.parse(user) : null };
-  };
+  const [user, setUser] = useState(localStorage.getItem(USER_KEY));
+  const navigate = useNavigate();
+
+  useEffect(() => {}, [user]);
+
+  function signOut(): void {
+    localStorage.removeItem(USER_KEY);
+    setUser(null);
+    navigate("/login");
+  }
 
   return (
     <ul className={style.menu}>
-      <li className={style.linkMenu}>Cardápio</li>
-      <li className={style.linkMenu}>Mais pedidos</li>
-      {hasUser != null ? <AuthenticatedMenu /> : <UnauthenticatedMenu />}
-      {hasUser != null ? (
+      <Link to={"/cardapio"} className={style.linkMenu}>
+        <li className={style.linkMenu}>Cardápio</li>
+      </Link>
+      <Link to={"/mais-pedidos"} className={style.linkMenu}>
+        <li className={style.linkMenu}>Mais pedidos</li>
+      </Link>
+      {user != null ? <AuthenticatedMenu /> : <UnauthenticatedMenu />}
+      {user != null ? (
         <button className={style.btn} onClick={signOut}>
           Sair
         </button>

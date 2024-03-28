@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   createContext,
   useCallback,
@@ -7,10 +9,17 @@ import {
 } from "react";
 
 import api from "../services/api";
-import { useNavigate } from "react-router-dom";
 import { IUser } from "../interfaces/IUser";
+import { USER_KEY } from "../constants/auth";
+import { useNavigate } from "react-router-dom";
 
 interface SignInCredencials {
+  email: string;
+  password: string;
+}
+
+interface SignUpCredencials {
+  name: string;
   email: string;
   password: string;
 }
@@ -22,6 +31,11 @@ interface AuthState {
 interface AuthContextData {
   user: IUser | null;
   signIn(credencials: SignInCredencials): Promise<void>;
+  signUp(credentials: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<void>;
   signOut(): void;
 }
 
@@ -31,10 +45,10 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate();
   const [data, setData] = useState<AuthState>(() => {
-    const user = localStorage.getItem("@PizzaTiradentes:user");
+    const user = localStorage.getItem(USER_KEY);
     return { user: user ? JSON.parse(user) : null };
   });
 
@@ -51,36 +65,42 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         throw new Error("Senha incorreta");
       }
 
-      localStorage.setItem("@PizzaTiradentes:user", JSON.stringify(user));
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
       setData({ user });
+      navigate("/home");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       throw new Error("Erro ao fazer login. Verifique suas credenciais.");
     }
   }, []);
 
+  const signUp = useCallback(
+    async ({ name, email, password }: SignUpCredencials) => {
+      await api.post("/users", {
+        name,
+        email,
+        password,
+        password_confirmation: password,
+      });
+    },
+    []
+  );
 
   const signOut = useCallback(() => {
-    console.log('dentro signout')
-    try {
-      setData({ user: null });
-      localStorage.removeItem("@PizzaTiradentes:user"); 
-      navigate("/login"); 
-    } catch (error) {
-      console.error("Erro ao fazer logout:", error);
-      throw new Error("Erro ao fazer logout.");
-    }
+    localStorage.removeItem(USER_KEY);
+
+    setData({} as AuthState);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export function useAuth(): AuthContextData {
-  const context = useContext(AuthContext);
+const useAuth = (): AuthContextData => {
+  return useContext(AuthContext);
+};
 
-  return context;
-}
+export { AuthProvider, useAuth };
