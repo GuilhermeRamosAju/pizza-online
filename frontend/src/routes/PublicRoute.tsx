@@ -5,7 +5,9 @@ export default function PublicRoutes() {
   const { user } = useAuth();
 
   const isAuthenticated = (): boolean => {
-    return !!user;
+    if (user) return true;
+
+    return false;
   };
 
   return isAuthenticated() ? <Navigate to="/home" /> : <Outlet />;
