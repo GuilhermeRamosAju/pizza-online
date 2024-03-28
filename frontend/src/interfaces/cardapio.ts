@@ -4,6 +4,7 @@ export interface IPizza {
   preco: number;
   sabores: string[]
   tamanho: string
+  descricao: string
 }
 
 export interface IDrink {
