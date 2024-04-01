@@ -1,17 +1,11 @@
-import { ReactNode } from "react";
+import { AuthProvider } from './auth';
 
-import { AuthProvider } from "./auth";
-
-interface AppProviderProps {
-    children: ReactNode
-}
-
-function AppProvider({ children }: AppProviderProps) {
-    return (
-        <AuthProvider>
-            {children}
-        </AuthProvider>
-    );
-}
+const AppProvider = ({ children }: React.PropsWithChildren) => {
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  );
+};
 
 export default AppProvider;
