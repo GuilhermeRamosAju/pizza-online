@@ -1,14 +1,12 @@
-import User from "../entities/User";
 import { v4 as uuidv4 } from "uuid";
-const db = require("../database/db.js");
+import db from "../database/index.js";
 
 class UserRepository {
-  private db: any;
   constructor() {
     this.db = db;
   }
 
-  public async insert(user: Partial<User>) {
+  async insert(user) {
     const id = uuidv4();
     await this.db.none(
       "INSERT INTO users(id, name, email, password) VALUES($1, $2, $3, $4)",
@@ -16,7 +14,7 @@ class UserRepository {
     );
   }
 
-  public async getUserByEmail(email: string) {
+  async getUserByEmail(email) {
     const user = await this.db.oneOrNone(
       "SELECT * FROM users WHERE email = $1",
       [email]

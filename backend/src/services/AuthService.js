@@ -1,20 +1,14 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-import UserRepository from "../repositories/UserRepository";
-
-interface AuhtServiceDTO {
-  name: string;
-  email: string;
-  password: string;
-}
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import UserRepository from "../repositories/UserRepository.js";
 
 export default class AuthService {
-  public static async register({ name, email, password }: AuhtServiceDTO) {
+  async register({ name, email, password }) {
     const user = await UserRepository.getUserByEmail(email);
     if (user) {
       throw new Error("User already exists");
     }
-    const hashedPassword: string = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await UserRepository.insert({
       name,
       email,
@@ -23,7 +17,7 @@ export default class AuthService {
     return newUser;
   }
 
-  public static async login(email: string, password: string) {
+  async login(email, password) {
     const user = await UserRepository.getUserByEmail(email);
     if (!user) {
       throw new Error("User not found");
@@ -38,7 +32,7 @@ export default class AuthService {
     return { user, token };
   }
 
-  async verifyToken(token: string) {
+  async verifyToken(token) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await UserRepository.getUserByEmail(decoded.email);
     return user;
